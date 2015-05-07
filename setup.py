@@ -25,10 +25,17 @@ setup(name='agsci.leadimage',
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-      'setuptools',
-      # -*- Extra requirements: -*-
+        'setuptools',
+        'plone.app.dexterity',
+        'plone.namedfile',
+        'plone.formwidget.namedfile',
+        'plone.behavior',
+        'zope.schema',
+        'zope.interface',
+        'zope.component',
       ],
     entry_points="""
-      # -*- Entry points: -*-
+        [z3c.autoinclude.plugin]
+        target = plone
       """,
     )

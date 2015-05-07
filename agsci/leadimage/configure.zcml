@@ -2,6 +2,11 @@
            xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
            i18n_domain="agsci.leadimage">
 
+    <includeDependencies package="." />
+    
+    <include package=".browser" />
+    <include package=".content" />
+
     <genericsetup:registerProfile
         name="default"
         title="agsci.leadimage"
@@ -9,5 +14,13 @@
         description=""
         provides="Products.GenericSetup.interfaces.EXTENSION"
     />
+
+    <!-- Register the import step -->
+    <genericsetup:importStep
+        name="agsci.leadimage"
+        title="agsci.leadimage: setuphanders.import_various"
+        description=""
+        handler="agsci.leadimage.setuphandlers.import_various"
+        />
 
 </configure>

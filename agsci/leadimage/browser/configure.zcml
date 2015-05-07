@@ -1,0 +1,17 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="agsci.leadimage">
+
+    <browser:viewlet
+        name="agsci.leadimage"
+        class=".viewlets.LeadImageViewlet"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
+        template="templates/leadimage.pt"
+        permission="zope2.View"
+        for="..content.behaviors.ILeadImage"
+    />
+
+</configure>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+ <object name="imaging_properties" meta_type="Plone Property Sheet" purge="False">
+  <property name="title">Image handling properties</property>
+  <property name="allowed_sizes" type="lines"  purge="False">
+   <element value="leadimage 350:467"/>
+   <element value="leadimage_full 900:600"/>
+   <element value="leadimage_folder 275:367"/>
+  </property>
+ </object>
+</object>

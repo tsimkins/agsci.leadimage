@@ -1,0 +1,15 @@
+<tal:leadimage condition="view/show">
+    <div 
+        tal:define="klass view/klass;
+                    caption view/caption;
+                    full_width view/full_width;"
+        tal:attributes="class klass">
+    
+        <img tal:replace="structure view/tag" />
+    
+        <p class="discreet"
+            tal:content="caption"
+            tal:condition="caption" />
+    
+    </div>
+</tal:leadimage>

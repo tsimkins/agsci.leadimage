@@ -1,0 +1,27 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="agsci.leadimage">
+
+    <include package="plone.behavior" file="meta.zcml" />
+
+    <!-- Behavior to include metadata fields -->
+
+    <plone:behavior
+        title="Lead Image"
+        description="Include a lead image and caption field on content"
+        provides=".behaviors.ILeadImage"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
+
+    <adapter factory=".behaviors.LeadImage" />
+
+    <subscriber
+        handler=".events.rescaleImage"
+        for=".behaviors.ILeadImage
+             zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+        />
+
+</configure>
