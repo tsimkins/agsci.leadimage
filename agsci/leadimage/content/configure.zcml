@@ -13,7 +13,6 @@
         title="Lead Image"
         description="Include a lead image and caption field on content"
         provides=".behaviors.ILeadImage"
-        for="plone.dexterity.interfaces.IDexterityContent"
         />
 
     <adapter factory=".behaviors.LeadImage" />
