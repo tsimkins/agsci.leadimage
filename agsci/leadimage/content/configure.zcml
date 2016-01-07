@@ -10,7 +10,7 @@
     <!-- Behavior to include metadata fields -->
 
     <plone:behavior
-        title="Lead Image"
+        title="AgSci Lead Image"
         description="Include a lead image and caption field on content"
         provides=".behaviors.ILeadImage"
         />
