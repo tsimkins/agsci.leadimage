@@ -17,9 +17,12 @@ class LeadImageViewlet(ViewletBase):
         return show and self.has_leadimage()
 
     def klass(self):
+        if self.full_width():
+            return "leadimage leadimage-full"
+            
         return "leadimage"
 
-    def tag(self, css_class='leadimage', scale='leadimage'):
+    def tag(self, css_class='', scale='leadimage'):
         if self.has_leadimage():
             if self.full_width():
                 scale = 'leadimage_full'
