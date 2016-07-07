@@ -1,7 +1,7 @@
 from zope.i18nmessageid import MessageFactory
 leadimageMessageFactory = MessageFactory('agsci.leadimage')
 
-from content.behaviors import ILeadImage
+from content.behaviors import ILeadImageBase
 from interfaces import ILeadImageMarker
 from plone.indexer import indexer
 from zope.component import provideAdapter
@@ -9,7 +9,7 @@ from zope.component import provideAdapter
 def initialize(context):
     pass
 
-@indexer(ILeadImage)
+@indexer(ILeadImageBase)
 def hasLeadImage(context):
 
     try:
