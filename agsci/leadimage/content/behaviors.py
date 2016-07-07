@@ -11,13 +11,7 @@ from ..interfaces import ILeadImageMarker
 from z3c.form.interfaces import IEditForm, IAddForm
 
 @provider(IFormFieldProvider)
-class ILeadImage(model.Schema):
-
-    model.fieldset(
-        'settings',
-        label=_(u'Settings'),
-        fields=['leadimage_show', 'leadimage_full_width',],
-    )
+class ILeadImageBase(model.Schema):
 
     leadimage = NamedBlobImage(
         title=_(u"Lead Image"),
@@ -43,13 +37,22 @@ class ILeadImage(model.Schema):
         description=_(u"This will show a large lead image on the object display."),
         default=False,
     )
-    
+
+@provider(IFormFieldProvider)
+class ILeadImage(ILeadImageBase):
+
+    model.fieldset(
+        'settings',
+        label=_(u'Settings'),
+        fields=['leadimage_show', 'leadimage_full_width',],
+    )
+
     form.omitted('leadimage', 'leadimage_caption', 'leadimage_show', 'leadimage_full_width')
     form.no_omit(IEditForm, 'leadimage', 'leadimage_caption', 'leadimage_show', 'leadimage_full_width')
     form.no_omit(IAddForm, 'leadimage', 'leadimage_caption', 'leadimage_show', 'leadimage_full_width')
-    
 
-@adapter(ILeadImage)
+
+@adapter(ILeadImageBase)
 @implementer(ILeadImageMarker)
 class LeadImage(object):
 
@@ -71,12 +74,12 @@ class LeadImage(object):
     @property
     def has_leadimage(self):
         leadimage = getattr(self.context, 'leadimage', None)
-        
+
         if leadimage and hasattr(leadimage, 'size') and leadimage.size > 0:
             return True
-            
+
         return False
-        
+
     def tag(self, css_class='leadimage', scale='leadimage_folder'):
         alt = getattr(self.context, 'leadimage_caption', '')
         images = self.context.restrictedTraverse('@@images')

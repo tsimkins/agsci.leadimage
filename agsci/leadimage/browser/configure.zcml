@@ -11,7 +11,7 @@
         manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
         template="templates/leadimage.pt"
         permission="zope2.View"
-        for="..content.behaviors.ILeadImage"
+        for="..content.behaviors.ILeadImageBase"
     />
 
 </configure>
