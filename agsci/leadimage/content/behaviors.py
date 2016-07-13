@@ -41,15 +41,10 @@ class ILeadImageBase(model.Schema):
 @provider(IFormFieldProvider)
 class ILeadImage(ILeadImageBase):
 
-    model.fieldset(
-        'settings',
-        label=_(u'Settings'),
-        fields=['leadimage_show', 'leadimage_full_width',],
-    )
-
     form.omitted('leadimage', 'leadimage_caption', 'leadimage_show', 'leadimage_full_width')
-    form.no_omit(IEditForm, 'leadimage', 'leadimage_caption', 'leadimage_show', 'leadimage_full_width')
-    form.no_omit(IAddForm, 'leadimage', 'leadimage_caption', 'leadimage_show', 'leadimage_full_width')
+    form.mode(leadimage_show='hidden', leadimage_full_width='hidden')
+    form.no_omit(IEditForm, 'leadimage', 'leadimage_caption')
+    form.no_omit(IAddForm, 'leadimage', 'leadimage_caption')
 
 
 @adapter(ILeadImageBase)
