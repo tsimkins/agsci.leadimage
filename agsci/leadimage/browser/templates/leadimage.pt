@@ -1,15 +1,19 @@
 <tal:leadimage condition="view/show">
-    <div 
+    <div
         tal:define="klass view/klass;
                     caption view/caption;
-                    full_width view/full_width;"
+                    full_width view/full_width;
+                    original_url view/original_url|nothing"
         tal:attributes="class klass">
-    
-        <img tal:replace="structure view/tag" />
-    
+
+        <a tal:omit-tag="not: original_url"
+            tal:attributes="href original_url">
+            <img tal:replace="structure view/tag" />
+        </a>
+
         <p class="discreet"
             tal:content="caption"
             tal:condition="caption" />
-    
+
     </div>
 </tal:leadimage>

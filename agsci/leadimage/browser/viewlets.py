@@ -19,7 +19,7 @@ class LeadImageViewlet(ViewletBase):
     def klass(self):
         if self.full_width():
             return "leadimage leadimage-full"
-            
+
         return "leadimage"
 
     def tag(self, css_class='', scale='leadimage'):
@@ -28,3 +28,6 @@ class LeadImageViewlet(ViewletBase):
                 scale = 'leadimage_full'
             return ILeadImage(self.context).tag(css_class=css_class, scale=scale)
         return ''
+
+    def original_url(self):
+        return '%s/@@images/leadimage' % self.context.absolute_url()
