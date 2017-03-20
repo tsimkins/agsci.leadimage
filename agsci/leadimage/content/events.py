@@ -1,14 +1,13 @@
-from PIL import Image, ImageDraw
+from PIL import Image
 from StringIO import StringIO
-from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from Products.CMFCore.utils import getToolByName
+from ..interfaces import ILeadImageMarker
 
 def rescaleImage(context, event):
 
     max_width = 900.0
     max_height = 1200.0
 
-    leadimage = getattr(context, 'leadimage', None)
+    leadimage = ILeadImageMarker(context).get_leadimage()
 
     if leadimage:
         (w,h) = leadimage.getImageSize()

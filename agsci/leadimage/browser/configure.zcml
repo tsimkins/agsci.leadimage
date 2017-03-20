@@ -14,4 +14,14 @@
         for="..content.behaviors.ILeadImageBase"
     />
 
+    <!-- Cropped Image Views -->
+
+    <browser:page
+        for="..content.behaviors.ILeadImageBase"
+        name="crop-image"
+        template="templates/crop-image.pt"
+        class=".views.CropImageView"
+        permission="cmf.ModifyPortalContent"
+    />
+
 </configure>

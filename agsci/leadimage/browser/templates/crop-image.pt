@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+  <body>
+    <metal:styleslot fill-slot="style_slot">
+        <style type="text/css">
+        #content table {
+            margin: 2em auto;
+        }
+
+        #content table td {
+            padding: 1em;
+        }
+
+        #content table img {
+            max-width: 500px;
+        }
+
+        </style>
+
+    </metal:styleslot>
+
+    <metal:fill fill-slot="content">
+
+        <div id="content">
+            <h1 class="documentFirstHeading noBreadcrumbs">Crop Image</h1>
+
+            <p><a tal:attributes="href context/absolute_url">Back to <strong tal:content="context/Title" /></a></p>
+
+            <table tal:condition="view/allowCrop">
+                <tr>
+                    <td> &nbsp; </td>
+                    <td align="center" valign="middle">
+                        <form tal:attributes="action view/topUrl" method="post" tal:condition="view/imageTall">
+                            <input type="submit" value="Top" />
+                        </form>
+                    </td>
+                    <td> &nbsp; </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="middle">
+                        <form tal:attributes="action view/leftUrl" method="post" tal:condition="view/imageWide">
+                            <input type="submit" value="Left" />
+                        </form>
+                    </td>
+                    <td> <img tal:attributes="src view/image_base64" /> </td>
+                    <td align="center" valign="middle">
+                        <form tal:attributes="action view/rightUrl" method="post" tal:condition="view/imageWide">
+                            <input type="submit" value="Right" />
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td> &nbsp; </td>
+                    <td align="center" valign="middle">
+                        <form tal:attributes="action view/bottomUrl" method="post" tal:condition="view/imageTall">
+                            <input type="submit" value="Bottom" />
+                        </form>
+                    </td>
+                    <td> &nbsp; </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="middle">
+                        <form tal:attributes="action view/previewUrl" method="post">
+                            <input type="submit" value="Preview" />
+                        </form>
+                    </td>
+                    <td align="center" valign="middle">
+                        <form tal:attributes="action view/middleUrl" method="post">
+                                <input type="submit" value="Middle" />
+                        </form>
+                    </td>
+                    <td align="center" valign="middle">
+                        <form tal:attributes="action view/commitUrl" method="post">
+                            <input type="submit" value="Save" />
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+            <p tal:condition="not:view/allowCrop">
+                This image is already cropped to appropriate dimensions.
+            </p>
+
+        </div>
+    </metal:fill>
+
+  </body>
+</html>

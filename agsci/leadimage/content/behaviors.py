@@ -1,14 +1,15 @@
-from agsci.leadimage import leadimageMessageFactory as _
-from plone.autoform.interfaces import IFormFieldProvider
-from plone.supermodel import model
-from zope.interface import provider, implementer
 from plone.autoform import directives as form
-from zope import schema
-from zope.schema.interfaces import IContextAwareDefaultFactory
+from plone.autoform.interfaces import IFormFieldProvider
 from plone.namedfile.field import NamedBlobImage
-from zope.component import adapter
-from ..interfaces import ILeadImageMarker
+from plone.namedfile.file import NamedBlobImage as _NamedBlobImage
+from plone.supermodel import model
 from z3c.form.interfaces import IEditForm, IAddForm
+from zope import schema
+from zope.component import adapter
+from zope.interface import provider, implementer
+
+from .. import leadimageMessageFactory as _
+from ..interfaces import ILeadImageMarker
 
 @provider(IFormFieldProvider)
 class ILeadImageBase(model.Schema):
@@ -81,3 +82,14 @@ class LeadImage(object):
         if self.has_leadimage:
             return images.tag('leadimage', scale=scale, alt=alt, css_class=css_class)
         return None
+
+    def get_leadimage(self):
+        if self.has_leadimage:
+            return getattr(self.context, 'leadimage')
+
+        return None
+
+    def set_leadimage(self, data):
+        field = _NamedBlobImage(filename=u'leadimage')
+        field.data = data
+        self.context.leadimage = field

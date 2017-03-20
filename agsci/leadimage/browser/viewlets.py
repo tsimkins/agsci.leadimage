@@ -1,4 +1,5 @@
 from plone.app.layout.viewlets import ViewletBase
+from zope.component import getMultiAdapter
 from ..interfaces import ILeadImageMarker as ILeadImage
 
 class LeadImageViewlet(ViewletBase):
@@ -31,3 +32,7 @@ class LeadImageViewlet(ViewletBase):
 
     def original_url(self):
         return '%s/@@images/leadimage' % self.context.absolute_url()
+
+    def crop_image(self):
+        crop_image_view = getMultiAdapter((self.context, self.request), name="crop-image")
+        return crop_image_view.allowCrop()
