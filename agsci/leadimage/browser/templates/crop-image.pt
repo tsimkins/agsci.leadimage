@@ -28,12 +28,15 @@
 
     <metal:fill fill-slot="content">
 
-        <div id="content">
+        <div id="content"
+             tal:define="allow_crop view/allowCrop|nothing;
+                         image_base64 view/image_base64|nothing">
             <h1 class="documentFirstHeading noBreadcrumbs">Crop Image</h1>
 
             <p><a tal:attributes="href context/absolute_url">Back to <strong tal:content="context/Title" /></a></p>
 
-            <table tal:condition="view/allowCrop">
+            <table
+                tal:condition="python: allow_crop and image_base64">
                 <tr>
                     <td> &nbsp; </td>
                     <td align="center" valign="middle">
@@ -49,7 +52,7 @@
                             <input type="submit" value="Left" />
                         </form>
                     </td>
-                    <td> <img tal:attributes="src view/image_base64" /> </td>
+                    <td> <img tal:attributes="src image_base64" /> </td>
                     <td align="center" valign="middle">
                         <form tal:attributes="action view/rightUrl" method="post" tal:condition="view/imageWide">
                             <input type="submit" value="Right" />
@@ -84,8 +87,12 @@
                 </tr>
             </table>
 
-            <p tal:condition="not:view/allowCrop">
+            <p tal:condition="not:allow_crop">
                 This image is already cropped to appropriate dimensions.
+            </p>
+
+            <p tal:condition="not:image_base64">
+                No valid image data found.
             </p>
 
         </div>

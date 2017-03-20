@@ -2,12 +2,13 @@ from PIL import Image, ImageDraw
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from StringIO import StringIO
-
 from plone.memoize.instance import memoize
 from zope.interface import implements
 from zope.publisher.interfaces import IPublishTraverse
+
 import base64
 
+from agsci.atlas.permissions import ATLAS_SUPERUSER
 from ..interfaces import ILeadImageMarker
 
 class CropImageView(BrowserView):
@@ -101,14 +102,6 @@ class CropImageView(BrowserView):
 
         return tuple([int(round(x)) for x in coords])
 
-    def getFormat(self):
-        type = self.getContentType()
-        return {
-            'image/jpeg' : 'JPEG',
-            'image/png' : 'PNG',
-            'image/gif' : 'GIF',
-        }.get(type, 'UNK')
-
     def topUrl(self):
         return '%s/@@%s/top' % (self.context.absolute_url(), self.__name__)
 
@@ -154,12 +147,18 @@ class CropImageView(BrowserView):
         else:
             return ''
 
+    @property
     def image_base64(self):
         content_type = self.getContentType()
-        cropped_image_data = self.getCroppedImage()
-        b64_image_data = base64.b64encode(cropped_image_data)
-        uri = "data:%s;base64,%s" % (content_type, b64_image_data)
-        return uri
+
+        try:
+            cropped_image_data = self.getCroppedImage()
+        except IndexError: # Error triggered by PIL and GIF
+            return None
+        else:
+            b64_image_data = base64.b64encode(cropped_image_data)
+            uri = "data:%s;base64,%s" % (content_type, b64_image_data)
+            return uri
 
     @memoize
     def getOriginalImage(self):
@@ -176,9 +175,11 @@ class CropImageView(BrowserView):
         mt = getToolByName(self.context, 'portal_membership')
         member = mt.getAuthenticatedMember()
 
-        if not (member.has_role('Manager', self.context) or member.has_role('Image Crop', self.context)):
+        # If we don't have superuser permissions
+        if not (member.has_role('Manager', self.context) or member.has_permission(ATLAS_SUPERUSER, self.context)):
             return False
 
+        # Check dimensions
         old_dimensions = self.imageDimensions()
         new_dimensions = self.newImageDimensions()
 
@@ -208,8 +209,8 @@ class CropImageView(BrowserView):
                 preview.line([(x0,y0), (x0,y1)], fill="#FF8A00", width=3)
 
             img_buffer = StringIO()
-            content_type = self.getContentType()
-            pil_image.save(img_buffer, self.getFormat(), quality=90)
+            image_format =  ILeadImageMarker(self.context).image_format
+            pil_image.save(img_buffer, image_format, quality=90)
 
             img_value = img_buffer.getvalue()
 

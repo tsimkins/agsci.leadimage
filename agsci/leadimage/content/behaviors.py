@@ -93,3 +93,15 @@ class LeadImage(object):
         field = _NamedBlobImage(filename=u'leadimage')
         field.data = data
         self.context.leadimage = field
+
+    @property
+    def image_format(self):
+
+        if self.has_leadimage:
+            return {
+                'image/jpeg' : 'JPEG',
+                'image/png' : 'PNG',
+                'image/gif' : 'GIF',
+            }.get(self.get_leadimage().contentType, None)
+
+        return None

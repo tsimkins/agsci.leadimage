@@ -12,11 +12,7 @@ def rescaleImage(context, event):
     if leadimage:
         (w,h) = leadimage.getImageSize()
 
-        leadimage_format =  {
-            'image/jpeg' : 'JPEG',
-            'image/png' : 'PNG',
-            'image/gif' : 'GIF',
-        }.get(leadimage.contentType, 'UNK')
+        image_format =  ILeadImageMarker(context).image_format
 
         ratio = min([max_width/w, max_height/h])
 
@@ -33,7 +29,7 @@ def rescaleImage(context, event):
 
                 img_buffer = StringIO()
 
-                pil_image.save(img_buffer, leadimage_format, quality=100)
+                pil_image.save(img_buffer, image_format, quality=100)
 
                 img_value = img_buffer.getvalue()
 
