@@ -21,7 +21,7 @@
         name="crop-image"
         template="templates/crop-image.pt"
         class=".views.CropImageView"
-        permission="cmf.ModifyPortalContent"
+        permission="cmf.ManagePortal"
     />
 
 </configure>
