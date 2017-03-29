@@ -95,13 +95,24 @@ class LeadImage(object):
         self.context.leadimage = field
 
     @property
-    def image_format(self):
+    def image_format_data(self):
+
+        default = [None, None]
 
         if self.has_leadimage:
             return {
-                'image/jpeg' : 'JPEG',
-                'image/png' : 'PNG',
-                'image/gif' : 'GIF',
-            }.get(self.get_leadimage().contentType, None)
+                'image/jpeg' : ['JPEG', 'jpg'],
+                'image/png' : ['PNG', 'png'],
+                'image/gif' : ['GIF', 'gif'],
+                'image/x-ms-bmp' : ['BMP', 'bmp'],
+            }.get(self.get_leadimage().contentType, default)
 
-        return None
+        return default
+
+    @property
+    def image_extension(self):
+        return self.image_format_data[1]
+
+    @property
+    def image_format(self):
+        return self.image_format_data[0]
