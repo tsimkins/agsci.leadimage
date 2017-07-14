@@ -8,6 +8,8 @@ from zope import schema
 from zope.component import adapter
 from zope.interface import provider, implementer
 
+from agsci.atlas.constants import IMAGE_FORMATS
+
 from .. import leadimageMessageFactory as _
 from ..interfaces import ILeadImageMarker
 
@@ -100,12 +102,7 @@ class LeadImage(object):
         default = [None, None]
 
         if self.has_leadimage:
-            return {
-                'image/jpeg' : ['JPEG', 'jpg'],
-                'image/png' : ['PNG', 'png'],
-                'image/gif' : ['GIF', 'gif'],
-                'image/x-ms-bmp' : ['BMP', 'bmp'],
-            }.get(self.get_leadimage().contentType, default)
+            return IMAGE_FORMATS.get(self.get_leadimage().contentType, default)
 
         return default
 

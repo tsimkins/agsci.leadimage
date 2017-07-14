@@ -1,6 +1,6 @@
-from PIL import Image
-from StringIO import StringIO
 from ..interfaces import ILeadImageMarker
+
+from agsci.atlas.utilities import rescaleImage as _rescaleImage
 
 def rescaleImage(context, event):
 
@@ -10,29 +10,6 @@ def rescaleImage(context, event):
     leadimage = ILeadImageMarker(context).get_leadimage()
 
     if leadimage:
-        (w,h) = leadimage.getImageSize()
 
-        image_format =  ILeadImageMarker(context).image_format
-
-        ratio = min([max_width/w, max_height/h])
-
-        if ratio < 1.0:
-            new_w = w * ratio
-            new_h = h * ratio
-
-            try:
-                pil_image = Image.open(StringIO(leadimage.data))
-            except IOError:
-                pass
-            else:
-                pil_image.thumbnail([new_w, new_h], Image.ANTIALIAS)
-
-                img_buffer = StringIO()
-
-                pil_image.save(img_buffer, image_format, quality=100)
-
-                img_value = img_buffer.getvalue()
-
-                leadimage._setData(img_value)
-
-
+        if _rescaleImage(leadimage):
+            context.reindexObject()
