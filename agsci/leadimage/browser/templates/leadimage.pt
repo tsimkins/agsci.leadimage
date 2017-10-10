@@ -1,24 +1,28 @@
-<tal:leadimage condition="view/show">
-    <div
-        tal:define="klass view/klass;
-                    caption view/caption;
-                    full_width view/full_width;
-                    original_url view/original_url|nothing"
-        tal:attributes="class klass">
+<div tal:define="klass view/klass;
+                 caption view/caption;
+                 full_width view/full_width;
+                 original_url view/original_url|nothing"
+     tal:attributes="class klass">
 
-        <a tal:omit-tag="not: original_url"
-            tal:attributes="href original_url">
-            <img tal:replace="structure view/tag" />
-        </a>
+    <a tal:omit-tag="not: original_url"
+        tal:attributes="href original_url">
+        <img tal:replace="structure view/tag" />
+    </a>
 
+    <p class="discreet"
+        tal:content="caption"
+        tal:condition="caption" />
+
+    <!--
         <p class="discreet"
-            tal:content="caption"
-            tal:condition="caption" />
-
-        <p tal:condition="view/crop_image|nothing"
-            class="discreet">
-            <a tal:attributes="href string:${context/absolute_url}/@@crop-image">[Crop Image]</a>
+           tal:condition="not: view/show">
+            [Lead image will not be shown on product page]
         </p>
+    -->
 
-    </div>
-</tal:leadimage>
+    <p tal:condition="view/crop_image|nothing"
+        class="discreet">
+        <a tal:attributes="href string:${context/absolute_url}/@@crop-image">[Crop Image]</a>
+    </p>
+
+</div>
