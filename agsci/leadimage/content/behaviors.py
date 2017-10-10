@@ -9,6 +9,7 @@ from zope.component import adapter
 from zope.interface import provider, implementer
 
 from agsci.atlas.constants import IMAGE_FORMATS
+from agsci.atlas.permissions import ATLAS_SUPERUSER
 
 from .. import leadimageMessageFactory as _
 from ..interfaces import ILeadImageMarker
@@ -44,11 +45,19 @@ class ILeadImageBase(model.Schema):
 @provider(IFormFieldProvider)
 class ILeadImage(ILeadImageBase):
 
-    form.omitted('leadimage', 'leadimage_caption', 'leadimage_show', 'leadimage_full_width')
-    form.mode(leadimage_show='hidden', leadimage_full_width='hidden')
+    form.omitted('leadimage', 'leadimage_caption', 'leadimage_full_width')
+    form.mode(leadimage_full_width='hidden')
     form.no_omit(IEditForm, 'leadimage', 'leadimage_caption')
     form.no_omit(IAddForm, 'leadimage', 'leadimage_caption')
 
+    # Internal
+    model.fieldset(
+        'internal',
+        label=_(u'Internal'),
+        fields=['leadimage_show',],
+    )
+
+    form.write_permission(leadimage_show=ATLAS_SUPERUSER)
 
 @adapter(ILeadImageBase)
 @implementer(ILeadImageMarker)
