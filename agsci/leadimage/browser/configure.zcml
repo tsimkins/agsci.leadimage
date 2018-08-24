@@ -21,7 +21,7 @@
         name="crop-image"
         template="templates/crop-image.pt"
         class=".views.CropImageView"
-        permission="agsci.atlas.super"
+        permission="agsci.leadimage.crop_image"
     />
 
 </configure>

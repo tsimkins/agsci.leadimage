@@ -176,7 +176,11 @@ class CropImageView(BrowserView):
         member = mt.getAuthenticatedMember()
 
         # If we don't have superuser permissions
-        if not (member.has_role('Manager', self.context) or member.has_permission(ATLAS_SUPERUSER, self.context)):
+        if not (
+            member.has_role('Manager', self.context) or
+            member.has_role('agsci.leadimage.crop_image', self.context) or
+            member.has_permission(ATLAS_SUPERUSER, self.context)
+        ):
             return False
 
         # Check dimensions

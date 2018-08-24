@@ -3,7 +3,8 @@
            i18n_domain="agsci.leadimage">
 
     <includeDependencies package="." />
-    
+
+    <include package=".permissions" />
     <include package=".browser" />
     <include package=".content" />
 
