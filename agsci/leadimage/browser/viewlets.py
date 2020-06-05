@@ -2,6 +2,8 @@ from plone.app.layout.viewlets import ViewletBase
 from zope.component import getMultiAdapter
 from ..interfaces import ILeadImageMarker as ILeadImage
 
+from agsci.atlas.content.structure import IAtlasStructure
+
 class LeadImageViewlet(ViewletBase):
 
     def caption(self):
@@ -11,7 +13,10 @@ class LeadImageViewlet(ViewletBase):
         return ILeadImage(self.context).leadimage_full_width
 
     def has_leadimage(self):
-        return ILeadImage(self.context).has_leadimage
+
+        # Never show the viewlet on Category1/2/3 pages
+        if not IAtlasStructure.providedBy(self.context):
+            return ILeadImage(self.context).has_leadimage
 
     def show(self):
         show = ILeadImage(self.context).leadimage_show
