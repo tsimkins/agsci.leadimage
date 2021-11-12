@@ -24,4 +24,44 @@
         permission="agsci.leadimage.crop_image"
     />
 
+    <browser:page
+        for="..content.behaviors.ILeadImageBase"
+        name="crop-image-react"
+        template="templates/crop-image-react.pt"
+        class=".views.CropImageReactView"
+        permission="agsci.leadimage.crop_image"
+    />
+
+    <browser:page
+        for="..content.behaviors.ILeadImageBase"
+        name="crop-image-apply"
+        class=".views.CropImageReactApplyView"
+        permission="agsci.leadimage.crop_image"
+    />
+
+    <!-- Cropped image views for images -->
+
+    <browser:page
+        for="plone.app.contenttypes.interfaces.IImage"
+        name="crop-image"
+        template="templates/crop-image-react.pt"
+        class=".views.CropImageReactView"
+        permission="agsci.leadimage.crop_image"
+    />
+
+    <browser:page
+        for="plone.app.contenttypes.interfaces.IImage"
+        name="crop-image-react"
+        template="templates/crop-image-react.pt"
+        class=".views.CropImageReactView"
+        permission="agsci.leadimage.crop_image"
+    />
+
+    <browser:page
+        for="plone.app.contenttypes.interfaces.IImage"
+        name="crop-image-apply"
+        class=".views.CropImageReactApplyView"
+        permission="agsci.leadimage.crop_image"
+    />
+
 </configure>
