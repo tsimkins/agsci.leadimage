@@ -87,9 +87,10 @@ class LeadImage(object):
 
         return False
 
-    def tag(self, css_class='leadimage', scale='leadimage_folder'):
+    def tag(self, css_class='leadimage', scale='preview'):
         alt = getattr(self.context, 'leadimage_caption', '')
         images = self.context.restrictedTraverse('@@images')
+
         if self.has_leadimage:
             return images.tag('leadimage', scale=scale, alt=alt, css_class=css_class)
         return None
