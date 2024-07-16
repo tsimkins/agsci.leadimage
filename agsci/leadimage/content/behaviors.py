@@ -34,12 +34,14 @@ class ILeadImageBase(model.Schema):
         title=_(u"Show Lead Image on this item"),
         description=_(u"This will show the lead image on the object display."),
         default=True,
+        required=False,
     )
 
     leadimage_full_width = schema.Bool(
         title=_(u"Full width lead image"),
         description=_(u"This will show a large lead image on the object display."),
         default=False,
+        required=False,
     )
 
 @provider(IFormFieldProvider)
